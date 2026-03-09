@@ -28,21 +28,15 @@ section {
   padding: 56px 72px 56px 72px;
   position: relative;
   overflow: hidden;
-  border-top: 5px solid transparent;
-  border-image: linear-gradient(90deg, var(--neo-blue), var(--neo-teal), var(--neo-cyan)) 1;
 }
 
-/* Logo watermark on regular slides */
-section:not(.lead)::before {
+/* Top accent bar */
+section::before {
   content: '';
   position: absolute;
-  bottom: 24px;
-  right: 56px;
-  width: 80px;
-  height: 40px;
-  background: url('./assets/logo.png') no-repeat center / contain;
-  opacity: 0.1;
-  pointer-events: none;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--neo-blue), var(--neo-teal), var(--neo-cyan));
 }
 
 /* Page number */
@@ -178,6 +172,9 @@ section.lead {
   text-align: left;
 }
 
+section.lead::before {
+  height: 6px;
+}
 
 section.lead h1 {
   font-size: 2.4em;
