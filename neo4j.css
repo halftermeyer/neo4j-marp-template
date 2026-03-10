@@ -231,6 +231,19 @@ section.invert code {
 
 section.invert::after { color: rgba(255,255,255,0.4); }
 
+section.invert th {
+  background: rgba(255,255,255,0.15);
+  color: var(--neo-cyan);
+}
+
+section.invert td {
+  color: rgba(255,255,255,0.85);
+  border-bottom-color: rgba(255,255,255,0.12);
+  background: transparent;
+}
+
+section.invert tr:nth-child(even) td { background: rgba(255,255,255,0.07); }
+
 /* ── Dense (code-heavy) slide ───────────────────────────────────────────── */
 section.dense {
   font-size: 20px;
