@@ -73,7 +73,7 @@ Use ` ```mermaid ` — rendered to SVG at build time. Supports all diagram types
 ![bg cover](assets/image.svg)         ← full slide background
 ```
 
-Put images in [`assets/`](assets/).
+Put images in [`assets/`](assets/) and reference them as `../assets/filename` from your deck files.
 
 ## Using an LLM to generate a deck
 

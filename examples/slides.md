@@ -7,7 +7,7 @@ math: katex
 
 <!-- _class: lead -->
 
-![width:160px](assets/logo-white.png)
+![width:160px](../assets/logo-white.png)
 
 # Neo4j Template for Marp
 ### Unofficial Graph-native slides · Neo4j brand · Markdown-first
@@ -87,7 +87,7 @@ LIMIT 20
 
 ## Image & Quote
 
-![bg right:45%](assets/lineage.png)
+![bg right:45%](../assets/lineage.png)
 
 > "Relationships are a first-class citizen in Neo4j — not an afterthought."
 > — Neo4j engineering
@@ -146,37 +146,37 @@ sequenceDiagram
 
 Resize with `width` or `height`:
 
-![width:300px](assets/sample.svg)
+![width:300px](../assets/sample.svg)
 
 ```markdown
-![width:300px](assets/sample.svg)
-![height:200px](assets/sample.svg)
+![width:300px](../assets/sample.svg)
+![height:200px](../assets/sample.svg)
 ```
 
 ---
 
 ## Media — Background split (left)
 
-![bg left:40%](assets/sample.svg)
+![bg left:40%](../assets/sample.svg)
 
 The image fills the **left 40%** of the slide.
 Right side is normal content.
 
 ```markdown
-![bg left:40%](assets/sample.svg)
+![bg left:40%](../assets/sample.svg)
 ```
 
 ---
 
 ## Media — Background split (right)
 
-![bg right:40%](assets/sample.svg)
+![bg right:40%](../assets/sample.svg)
 
 The image fills the **right 40%** of the slide.
 Content flows on the left.
 
 ```markdown
-![bg right:40%](assets/sample.svg)
+![bg right:40%](../assets/sample.svg)
 ```
 
 ---
@@ -185,12 +185,12 @@ Content flows on the left.
 
 <!-- _class: invert -->
 
-![bg cover](assets/sample.svg)
+![bg cover](../assets/sample.svg)
 
 ```markdown
-![bg cover](assets/sample.svg)   ← fills entire slide
-![bg contain](assets/sample.svg) ← fits without cropping
-![bg 80%](assets/sample.svg)     ← explicit scale
+![bg cover](../assets/sample.svg)   ← fills entire slide
+![bg contain](../assets/sample.svg) ← fits without cropping
+![bg 80%](../assets/sample.svg)     ← explicit scale
 ```
 
 ---

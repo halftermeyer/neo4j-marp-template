@@ -151,18 +151,18 @@ Examples relevant to graphs:
 
 ## Images
 
-Place image files in `assets/`. Reference with relative paths.
+Place image files in `assets/` (one level up from the deck file). Reference with `../assets/`.
 
 ```markdown
-![width:400px](assets/diagram.svg)           <!-- inline, resized -->
-![bg left:40%](assets/diagram.svg)           <!-- left half background -->
-![bg right:40%](assets/diagram.svg)          <!-- right half background -->
-![bg cover](assets/diagram.svg)              <!-- full slide background -->
+![width:400px](../assets/diagram.svg)           <!-- inline, resized -->
+![bg left:40%](../assets/diagram.svg)           <!-- left half background -->
+![bg right:40%](../assets/diagram.svg)          <!-- right half background -->
+![bg cover](../assets/diagram.svg)              <!-- full slide background -->
 ```
 
 Background split is ideal for a visual + explanation layout:
 ```markdown
-![bg left:45%](assets/architecture.svg)
+![bg left:45%](../assets/architecture.svg)
 
 ## Architecture
 
@@ -288,7 +288,7 @@ math: katex
 
 <!-- _class: lead -->
 
-![width:160px](assets/logo-white.png)
+![width:160px](../assets/logo-white.png)
 
 # [Deck Title]
 ### [Subtitle or presenter name / date]
