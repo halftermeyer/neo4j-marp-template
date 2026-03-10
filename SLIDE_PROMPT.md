@@ -108,7 +108,7 @@ ORDER BY age DESC
 LIMIT 5
 ```
 
-Keep code blocks short on slides — max ~10 lines. Use comments (`// comment`) to annotate.
+Keep code blocks short on slides — **max 7 lines**. Use comments (`// comment`) to annotate key steps rather than expanding the query. If a query needs more than 7 lines, split it across two slides or show only the relevant excerpt.
 
 ---
 
@@ -272,6 +272,8 @@ math: katex
 
 <!-- _class: lead -->
 
+![width:160px](assets/logo-white.png)
+
 # [Deck Title]
 ### [Subtitle or presenter name / date]
 
@@ -315,6 +317,7 @@ math: katex
 - ❌ Generic Cypher: `MATCH (n) RETURN n LIMIT 10` — use domain-relevant queries
 - ❌ Using `lead` class for every slide — it loses impact
 - ❌ Mixing too many colors in custom HTML — stick to the palette above
+- ❌ Cypher blocks longer than 7 lines — split across slides or show an excerpt instead
 - ❌ Diagrams with more than ~8 nodes — they become unreadable at slide scale
 - ❌ Forgetting `---` separators between slides
 - ❌ Putting a `<!-- _class: ... -->` comment after the `---` separator of the *next* slide — it must be immediately before the slide content with no `---` between them

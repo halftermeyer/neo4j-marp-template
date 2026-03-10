@@ -2,7 +2,7 @@
  * build.mjs — Neo4j Marp build pipeline
  *
  * Usage:
- *   node build.mjs [input.md] [--html|--pdf|--preview]
+ *   node build.mjs [input.md] [--html|--pdf|--pptx|--preview]
  *
  * Defaults:
  *   input  → all *.md files in current directory (excluding *.preview.md)
@@ -12,6 +12,7 @@
  *   npm run pdf                    # all *.md → *.pdf
  *   npm run pdf -- dojo.md         # dojo.md → dojo.pdf
  *   node build.mjs dojo.md --pdf   # same
+ *   npm run pptx -- dojo.md        # dojo.md → dojo.pptx
  */
 
 import { readFileSync, writeFileSync, mkdtempSync, rmSync, readdirSync } from 'fs'
@@ -25,7 +26,7 @@ hljs.registerLanguage('cypher', cypher)
 
 // ── Parse arguments ───────────────────────────────────────────────────────
 const args = process.argv.slice(2)
-const FORMAT_FLAGS = ['--pdf', '--html', '--preview']
+const FORMAT_FLAGS = ['--pdf', '--pptx', '--html', '--preview']
 const format   = args.find(a => FORMAT_FLAGS.includes(a)) ?? '--html'
 const inputArg = args.find(a => !a.startsWith('--'))
 
@@ -89,7 +90,8 @@ function buildFile(inputFile) {
 
   // Step 2: Marp CLI
   const outputArgs =
-    format === '--pdf'     ? ['--pdf', '--allow-local-files', '-o', join(dir, `${stem}.pdf`)]
+    format === '--pdf'     ? ['--pdf',  '--allow-local-files', '-o', join(dir, `${stem}.pdf`)]
+  : format === '--pptx'    ? ['--pptx', '--allow-local-files', '-o', join(dir, `${stem}.pptx`)]
   : format === '--preview' ? ['--preview']
   :                          ['-o', join(dir, `${stem}.html`)]
 

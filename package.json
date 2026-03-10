@@ -4,6 +4,7 @@
   "scripts": {
     "preview": "node build.mjs --preview",
     "pdf":     "node build.mjs --pdf",
+    "pptx":    "node build.mjs --pptx",
     "html":    "node build.mjs --html"
   },
   "keywords": [],
