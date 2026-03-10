@@ -169,8 +169,8 @@ section.lead {
     url(assets/nodes-v.svg),
     url(assets/nodes-h.svg);
   background-repeat: no-repeat, no-repeat;
-  background-position: right 40px bottom 40px, right 200px bottom 20px;
-  background-size: 110px auto, 130px auto;
+  background-position: right 44px bottom 44px, right 180px bottom 22px;
+  background-size: 115px auto, 145px auto;
   color: white;
   display: flex;
   flex-direction: column;
