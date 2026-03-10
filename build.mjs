@@ -37,9 +37,11 @@ const isMarpFile = f => {
   return match && /marp:\s*true/.test(match[1])
 }
 
+const DECKS_DIR = 'decks'
+
 const inputFiles = inputArg
   ? [resolve(inputArg)]
-  : readdirSync('.').filter(f => f.endsWith('.md') && !f.endsWith('.preview.md') && !/^readme\.md$/i.test(f)).map(f => resolve(f)).filter(isMarpFile)
+  : readdirSync(DECKS_DIR).filter(f => f.endsWith('.md') && !f.endsWith('.preview.md')).map(f => resolve(DECKS_DIR, f)).filter(isMarpFile)
 
 if (inputFiles.length === 0) {
   console.error('[build] No .md files found.')

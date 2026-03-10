@@ -12,7 +12,7 @@ npm run pptx      # → slides.pptx (image-based, not editable)
 npm run preview   # → browser preview (live reload)
 ```
 
-Edit [`examples/slides.md`](examples/slides.md) and re-run.
+Put your `.md` files in [`decks/`](decks/) and re-run. See [`examples/`](examples/) for reference decks.
 
 ## Custom input file
 
@@ -105,7 +105,8 @@ Claude writes the `.md` file, clones this repo to a temp directory, builds the P
 
 | File | Purpose |
 |---|---|
-| `examples/` | Example decks (`slides.md`, `graph-type.md`) |
+| `decks/` | Your slide files — put them here |
+| `examples/` | Reference decks (`slides.md`, `graph-type.md`) |
 | `neo4j.css` | Neo4j brand theme |
 | `build.mjs` | Build pipeline (preprocess + Marp CLI) |
 | `marp.config.mjs` | Marp engine config (theme + Cypher hljs) |
