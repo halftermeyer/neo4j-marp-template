@@ -40,6 +40,7 @@ Apply with an HTML comment **before** the slide content:
 |---|---|---|
 | `lead` | Dark navy background, large white title, cyan subtitle | Opening slide, section breaks, closing slide |
 | `invert` | Dark blue background, cyan headings | Emphasis slides, key takeaways |
+| `dense` | Reduced font size (20px) and tighter spacing | Slides with long code listings that would otherwise overflow |
 | _(none)_ | White background, blue headings | Regular content slides |
 
 **Section break pattern** — use `lead` between major sections:
@@ -317,7 +318,7 @@ math: katex
 - ❌ Generic Cypher: `MATCH (n) RETURN n LIMIT 10` — use domain-relevant queries
 - ❌ Using `lead` class for every slide — it loses impact
 - ❌ Mixing too many colors in custom HTML — stick to the palette above
-- ❌ Cypher blocks longer than 7 lines — split across slides or show an excerpt instead
+- ❌ Cypher blocks longer than 7 lines on a normal slide — use `<!-- _class: dense -->` or split across slides
 - ❌ Diagrams with more than ~8 nodes — they become unreadable at slide scale
 - ❌ Forgetting `---` separators between slides
 - ❌ Putting a `<!-- _class: ... -->` comment after the `---` separator of the *next* slide — it must be immediately before the slide content with no `---` between them

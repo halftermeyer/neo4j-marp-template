@@ -38,6 +38,30 @@ LIMIT 10
 
 ---
 
+<!-- _class: dense -->
+
+## Dense Slide — Longer Code Listing
+
+```cypher
+// Find fraud rings: people sharing identity documents
+MATCH (p1:Person)-[:HAS_DOC]->(doc:Document)<-[:HAS_DOC]-(p2:Person)
+WHERE p1 <> p2
+WITH doc, collect(DISTINCT p1) + collect(DISTINCT p2) AS suspects
+WHERE size(suspects) > 2
+UNWIND suspects AS s
+MATCH (s)-[:MADE]->(txn:Transaction)
+WHERE txn.amount > 5000
+  AND txn.createdAt > datetime() - duration({days: 30})
+WITH s, doc, sum(txn.amount) AS totalExposure
+ORDER BY totalExposure DESC
+RETURN s.name AS suspect,
+       doc.number AS sharedDoc,
+       totalExposure
+LIMIT 20
+```
+
+---
+
 ## Two-Column Layout
 
 <div style="display: flex; gap: 2rem;">
