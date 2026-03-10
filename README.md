@@ -85,12 +85,13 @@ Install the skill once to generate and build branded decks from any directory us
 
 **Prerequisites:** [Claude Code](https://claude.ai/code) installed.
 
-**Install** (from this repo root — only these two files are needed):
+**Install** (run from anywhere inside this repo):
 
 ```bash
+REPO=$(git rev-parse --show-toplevel)
 mkdir -p ~/.claude/skills/neo4j-slides
-cp claude-tools/skills/neo4j-slides/SKILL.md ~/.claude/skills/neo4j-slides/
-cp SLIDE_PROMPT.md ~/.claude/skills/neo4j-slides/
+cp "$REPO/claude-tools/skills/neo4j-slides/SKILL.md" ~/.claude/skills/neo4j-slides/
+cp "$REPO/SLIDE_PROMPT.md" ~/.claude/skills/neo4j-slides/
 ```
 
 **Use:** open Claude Code in any directory and run:
