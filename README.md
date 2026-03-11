@@ -61,6 +61,20 @@ Per-slide palette classes (combine with layout classes):
 <!-- _class: invert forest -->
 ```
 
+### PDF-only skip
+
+Mark a slide to appear in HTML/preview but be omitted from the PDF:
+
+```markdown
+<!-- _skip: pdf -->
+
+## This slide is HTML-only
+
+Video demo, live links, or speaker-only content here.
+```
+
+The source `.md` is never modified — only the intermediate build file is filtered.
+
 ### Cypher
 
 Use ` ```cypher ` — keywords, labels, strings, and numbers are syntax-highlighted automatically.

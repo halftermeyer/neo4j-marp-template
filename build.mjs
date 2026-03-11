@@ -62,12 +62,27 @@ const marp          = new URL('./node_modules/.bin/marp',    import.meta.url).pa
 const mermaidConfig = new URL('./mermaid.config.json',       import.meta.url).pathname
 
 // ── Preprocess: Cypher highlight + Mermaid → SVG ─────────────────────────────
-function preprocess(inputFile) {
+// ── PDF-only slide filter ─────────────────────────────────────────────────────
+// Slides marked with <!-- _skip: pdf --> are removed from the preview file
+// before PDF builds. The source .md is never modified.
+function skipPdfSlides(content) {
+  // blocks[0]="" blocks[1]=frontmatter blocks[N+1]=slide-N
+  const blocks = content.split(/^---$/m)
+  const filtered = blocks.filter((block, i) => {
+    if (i < 2) return true   // keep empty prefix + frontmatter
+    return !/<!--\s*_skip:\s*pdf\s*-->/.test(block)
+  })
+  return filtered.join('---')
+}
+
+function preprocess(inputFile, skipPdf = false) {
   const stem        = basename(inputFile, '.md')
   const dir         = dirname(inputFile)
   const previewFile = join(dir, `${stem}.preview.md`)
 
   let content = readFileSync(inputFile, 'utf8')
+
+  if (skipPdf) content = skipPdfSlides(content)
 
   content = content.replace(/```cypher\n([\s\S]*?)```/g, (_, code) => {
     const highlighted = hljs.highlight(code.trimEnd(), { language: 'cypher' }).value
@@ -166,16 +181,17 @@ async function buildFile(inputFile) {
 
   console.log(`[build] ${basename(inputFile)} → ${format.replace('--', '')}`)
 
-  const previewFile = preprocess(inputFile)
+  const isPdf      = format === '--pdf'
+  const previewFile = preprocess(inputFile, isPdf)
 
   const outputArgs =
-    format === '--pdf'     ? ['--pdf',  '--allow-local-files', '-o', join(dir, `${stem}.pdf`)]
+    isPdf                  ? ['--pdf',  '--allow-local-files', '-o', join(dir, `${stem}.pdf`)]
   : format === '--pptx'    ? ['--pptx', '--allow-local-files', '-o', join(dir, `${stem}.pptx`)]
   : format === '--preview' ? ['--preview']
   :                          ['-o', join(dir, `${stem}.html`)]
 
   // For PDF: optionally detect overflow, patch, then rebuild
-  if (format === '--pdf' && !noDensify) {
+  if (isPdf && !noDensify) {
     // First pass: build to HTML for overflow check
     const htmlFile = join(dir, `${stem}.html`)
     spawnSync(marp, ['--no-stdin', '--html', previewFile, '-o', htmlFile], { stdio: 'pipe' })
@@ -184,7 +200,7 @@ async function buildFile(inputFile) {
 
     if (patched) {
       // Re-preprocess patched source, then build PDF
-      preprocess(inputFile)
+      preprocess(inputFile, true)
     }
   }
 

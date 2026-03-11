@@ -38,6 +38,20 @@ Apply with an HTML comment **before** the slide content:
 <!-- _class: lead -->
 ```
 
+### PDF skip directive
+
+To include a slide in HTML/preview but exclude it from the PDF (e.g. video embeds, live-demo slides, speaker-only content):
+
+```markdown
+<!-- _skip: pdf -->
+
+## HTML-only slide
+
+<video src="../assets/demo.mp4" controls></video>
+```
+
+The source file is never modified — the filter runs only during the build.
+
 ### Layout classes
 
 | Class | Effect | When to use |
