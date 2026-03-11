@@ -163,6 +163,8 @@ sequenceDiagram
 
 ---
 
+
+<!-- _class: dense -->
 ## Palette Classes — Reference
 
 Apply a palette class alongside layout classes (`lead`, `invert`, `dense`):
