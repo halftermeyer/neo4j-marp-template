@@ -26,6 +26,8 @@ math: katex
 ---
 ```
 
+Always use `theme: neo4j`. Color variety is achieved with per-slide palette classes, not separate theme files.
+
 ---
 
 ## Slide classes
@@ -36,12 +38,34 @@ Apply with an HTML comment **before** the slide content:
 <!-- _class: lead -->
 ```
 
+### Layout classes
+
 | Class | Effect | When to use |
 |---|---|---|
-| `lead` | Dark navy background, large white title, cyan subtitle | Opening slide, section breaks, closing slide |
-| `invert` | Dark blue background, cyan headings | Emphasis slides, key takeaways |
+| `lead` | Dark background, large white title, accent subtitle | Opening slide, section breaks, closing slide |
+| `invert` | Dark background, accent headings | Emphasis slides, key takeaways |
 | `dense` | Reduced font size (20px) and tighter spacing | Slides with long code listings, many bullet points, or any content-heavy layout that would otherwise overflow |
-| _(none)_ | White background, blue headings | Regular content slides |
+| _(none)_ | White background, colored headings | Regular content slides |
+
+### Per-slide palette classes
+
+Override the accent color on individual slides without changing the deck theme. Combine with layout classes by space-separating them.
+
+| Class | Palette | When to use |
+|---|---|---|
+| _(none)_ | Baltic blue — `#0A6190` / teal | Default — most content slides, core Neo4j topics |
+| `forest` | Forest green — `#145439` / mid-green | Nature, sustainability, growth, ecosystem/partner content |
+| `marigold` | Amber — `#C07A00` / golden | Energy, innovation, premium content, warm storytelling |
+| `hibiscus` | Coral/red — `#D43300` / orange | Bold claims, warnings, high-energy or disruptive topics |
+| `periwinkle` | Blue-violet — `#6A82FF` / lavender | AI/ML, future tech, digital transformation |
+| `neutral` | Warm gray — `#4F4E4D` / teal | Appendix, reference slides, subdued/archival content |
+
+**Combining palette + layout classes:**
+```markdown
+<!-- _class: invert forest -->   ← dark green invert slide
+<!-- _class: lead hibiscus -->   ← bold coral title slide
+<!-- _class: dense periwinkle --> ← AI code slide with blue-violet accent
+```
 
 **Section break pattern** — use `lead` between major sections:
 ```markdown
@@ -54,6 +78,11 @@ Apply with an HTML comment **before** the slide content:
 
 ---
 ```
+
+**When to introduce a palette class mid-deck:**
+- Use `forest` / `marigold` / `hibiscus` / `periwinkle` for a single section or slide cluster that has a clearly distinct topic or tone.
+- Do not alternate palette classes slide-by-slide — it looks chaotic. Apply the same palette to all slides in a logical section.
+- `neutral` is the only palette class suitable for isolated one-off slides (appendix, legal, reference).
 
 ---
 
@@ -135,6 +164,53 @@ sequenceDiagram
 
 Keep diagrams simple — max ~6 nodes or ~6 steps for readability on a slide.
 
+**Palette-aware diagrams** — Mermaid SVGs are pre-rendered at build time and don't automatically inherit the slide's palette class. To match diagram colors to the slide palette, add a `%%{init: ...}%%` directive as the first line of the diagram block:
+
+**Graph/flowchart diagrams** — use `mainBkg`, `nodeBorder`, `primaryTextColor`, `lineColor`:
+
+| Slide palette | `mainBkg` | `nodeBorder` | `primaryTextColor` | `lineColor` |
+|---|---|---|---|---|
+| _(default)_ | `#E8F3F8` | `#0A6190` | `#014063` | `#0A6190` |
+| `forest` | `#D6ECD8` | `#145439` | `#0C2B1E` | `#6FA646` |
+| `marigold` | `#FDF0CC` | `#C07A00` | `#4A2D00` | `#FFA901` |
+| `hibiscus` | `#FDE8E2` | `#D43300` | `#4A1000` | `#F96746` |
+| `periwinkle` | `#E8EAFF` | `#6A82FF` | `#0D1240` | `#8A9AFF` |
+| `neutral` | `#F0EBE0` | `#4F4E4D` | `#181414` | `#4C99A4` |
+
+**Sequence diagrams** — use `actorBkg`, `actorBorder`, `actorTextColor`, `signalColor`:
+
+| Slide palette | `actorBkg` | `actorBorder` | `actorTextColor` | `signalColor` |
+|---|---|---|---|---|
+| _(default)_ | `#0A6190` | `#014063` | `#FCF9F6` | `#014063` |
+| `forest` | `#145439` | `#0C2B1E` | `#FCF9F6` | `#0C2B1E` |
+| `marigold` | `#C07A00` | `#8B5800` | `#FCF9F6` | `#8B5800` |
+| `hibiscus` | `#D43300` | `#9E2500` | `#FCF9F6` | `#9E2500` |
+| `periwinkle` | `#6A82FF` | `#4A5FDB` | `#FFFFFF` | `#4A5FDB` |
+| `neutral` | `#4F4E4D` | `#181414` | `#FCF9F6` | `#181414` |
+
+Example — `forest` flowchart:
+```markdown
+<!-- _class: forest -->
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#D6ECD8", "mainBkg": "#D6ECD8", "nodeBorder": "#145439", "primaryBorderColor": "#145439", "primaryTextColor": "#0C2B1E", "lineColor": "#6FA646", "edgeLabelBackground": "#F0F6F1"}}}%%
+graph LR
+    A -->|label| B
+```
+```
+
+Example — `periwinkle` sequence:
+```markdown
+<!-- _class: periwinkle -->
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"actorBkg": "#6A82FF", "actorBorder": "#4A5FDB", "actorTextColor": "#FFFFFF", "actorLineColor": "#8A9AFF", "signalColor": "#4A5FDB", "signalTextColor": "#0D1240"}}}%%
+sequenceDiagram
+    App->>Neo4j: query
+    Neo4j-->>App: result
+```
+```
+
+Only add the `%%{init: ...}%%` directive when the diagram sits on a palette-accented slide. Omit it on default (blue) slides.
+
 ---
 
 ## Math (KaTeX)
@@ -215,20 +291,42 @@ Prefer this over plain bold text for any "rule of thumb", "key insight", or "tak
 ## Neo4j brand guidelines
 
 ### Colors (for inline HTML or SVG if needed)
+
+**Primary palette (Baltic blue)**
+| Name | Hex | Use |
+|---|---|---|
+| Mid Baltic | `#0A6190` | Primary headings, links, bold text |
+| Dark Baltic | `#014063` | Dark backgrounds, h3 |
+| Darkest Baltic | `#002B43` | Lead slide background |
+| Baltic (teal) | `#4C99A4` | Dividers, markers, borders |
+| Light Baltic | `#8FE3E8` | Cypher keywords, lead subtitles |
+| Periwinkle | `#6A82FF` | AI/digital highlight accent |
+| Highlight Yellow | `#FAFF00` | Rare high-contrast callout (use sparingly) |
+
+**Neutral palette**
+| Name | Hex | Use |
+|---|---|---|
+| Black | `#181414` | Strong dark backgrounds |
+| Dark Gray | `#4F4E4D` | Muted headings |
+| Cream | `#F2EAD4` | Warm surface backgrounds |
+| Off-white | `#FCF9F6` | Light slide backgrounds |
+
+**Secondary palette**
+| Name | Hex | Palette class |
+|---|---|---|
+| Forest | `#145439` | `forest` |
+| Mid Forest | `#6FA646` | `forest` (accent) |
+| Light Forest | `#90CB62` | `forest` (light) / Cypher node labels |
+| Marigold | `#FFA901` | `marigold` / Cypher strings |
+| Mid Marigold | `#FFC450` | `marigold` (accent) |
+| Hibiscus | `#D43300` | `hibiscus` |
+| Mid Hibiscus | `#F96746` | `hibiscus` (accent) |
+
+**Typography**
 | Token | Hex | Use |
 |---|---|---|
-| Blue | `#0A6190` | Primary headings, links, bold text |
-| Dark blue | `#014063` | Dark backgrounds, h3 |
-| Darkest | `#041823` | Lead slide background |
-| Forest green | `#145439` | Secondary accent |
-| Teal | `#5DB3BF` | Dividers, markers, borders |
-| Cyan | `#8FE3E8` | Cypher keywords, lead subtitles |
-| Light green | `#90CB62` | Cypher node labels |
-| Marigold | `#FFA901` | Cypher strings, highlights |
 | Text | `#1B1B1B` | Body copy |
 | Muted | `#525252` | Secondary text, lists |
-| Off-white | `#FCF9F6` | Warm backgrounds |
-| Surface | `#F5F7FA` | Card backgrounds |
 
 ### Fonts
 - **Syne** — headings (loaded from Google Fonts)

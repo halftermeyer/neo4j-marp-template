@@ -49,8 +49,9 @@ if (inputFiles.length === 0) {
 }
 
 // ── Build function ────────────────────────────────────────────────────────
-const mmdc = new URL('./node_modules/.bin/mmdc', import.meta.url).pathname
-const marp = new URL('./node_modules/.bin/marp', import.meta.url).pathname
+const mmdc         = new URL('./node_modules/.bin/mmdc', import.meta.url).pathname
+const marp         = new URL('./node_modules/.bin/marp', import.meta.url).pathname
+const mermaidConfig = new URL('./mermaid.config.json', import.meta.url).pathname
 
 function buildFile(inputFile) {
   const stem        = basename(inputFile, '.md')
@@ -77,7 +78,7 @@ function buildFile(inputFile) {
       const outFile = join(tmpDir, `d${idx}.svg`)
       idx++
       writeFileSync(inFile, diagram.trimEnd())
-      execFileSync(mmdc, ['-i', inFile, '-o', outFile, '--backgroundColor', 'transparent'], { stdio: 'pipe' })
+      execFileSync(mmdc, ['-i', inFile, '-o', outFile, '--backgroundColor', 'transparent', '-c', mermaidConfig], { stdio: 'pipe' })
       const svg = readFileSync(outFile, 'utf8')
         .replace(/<\?xml[^?]*\?>\s*/g, '')
         .replace(/(<svg[^>]*) width="[^"]*"/, '$1')

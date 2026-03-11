@@ -1,0 +1,51 @@
+{
+  "theme": "base",
+  "themeVariables": {
+    "fontFamily": "ui-sans-serif, system-ui, sans-serif",
+    "fontSize": "16px",
+
+    "primaryColor":       "#E8F3F8",
+    "primaryTextColor":   "#014063",
+    "primaryBorderColor": "#0A6190",
+
+    "secondaryColor":       "#F0F5F8",
+    "secondaryTextColor":   "#1B1B1B",
+    "secondaryBorderColor": "#4C99A4",
+
+    "tertiaryColor":       "#FCF9F6",
+    "tertiaryTextColor":   "#1B1B1B",
+    "tertiaryBorderColor": "#8FE3E8",
+
+    "background":    "#ffffff",
+    "mainBkg":       "#E8F3F8",
+    "nodeBorder":    "#0A6190",
+    "lineColor":     "#0A6190",
+    "textColor":     "#1B1B1B",
+    "titleColor":    "#014063",
+
+    "clusterBkg":    "#F0F5F8",
+    "clusterBorder": "#4C99A4",
+
+    "edgeLabelBackground": "#FCF9F6",
+
+    "actorBkg":      "#0A6190",
+    "actorBorder":   "#014063",
+    "actorTextColor":"#FCF9F6",
+    "actorLineColor":"#4C99A4",
+
+    "signalColor":     "#014063",
+    "signalTextColor": "#1B1B1B",
+
+    "noteBkgColor":    "#F0F5F8",
+    "noteBorderColor": "#4C99A4",
+    "noteTextColor":   "#014063",
+
+    "labelBoxBkgColor":    "#F0F5F8",
+    "labelBoxBorderColor": "#4C99A4",
+    "labelTextColor":      "#1B1B1B",
+    "loopTextColor":       "#014063",
+
+    "activationBkgColor":    "#8FE3E8",
+    "activationBorderColor": "#014063"
+  }
+}

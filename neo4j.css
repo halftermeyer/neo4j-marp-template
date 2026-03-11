@@ -289,3 +289,65 @@ section.dense pre code { font-size: 0.82em; }
   max-height: 420px;
   height: auto;
 }
+
+/* ── Per-slide palette accent classes ───────────────────────────────────── */
+/*
+ * Override CSS tokens on individual slides without switching the deck theme.
+ * Combine freely with layout classes: <!-- _class: invert forest -->
+ *
+ * Forest   — nature, sustainability, growth, partner content
+ * Marigold — energy, warmth, innovation, premium/partner decks
+ * Hibiscus — bold, high-energy, alerts, disruptive topics
+ * Periwinkle — AI/ML, future tech, innovation, digital
+ * Neutral  — appendix, reference, subdued or archival content
+ */
+
+section.forest {
+  --neo-blue:      #145439;
+  --neo-dark-blue: #0C2B1E;
+  --neo-darkest:   #061510;
+  --neo-teal:      #6FA646;
+  --neo-cyan:      #90CB62;
+  --neo-surface:   #F0F6F1;
+  --neo-border:    #C8DFD0;
+}
+
+section.marigold {
+  --neo-blue:      #C07A00;
+  --neo-dark-blue: #8B5800;
+  --neo-darkest:   #2B1A00;
+  --neo-teal:      #FFA901;
+  --neo-cyan:      #FFC450;
+  --neo-surface:   #FDF6E8;
+  --neo-border:    #F0DCA0;
+}
+
+section.hibiscus {
+  --neo-blue:      #D43300;
+  --neo-dark-blue: #9E2500;
+  --neo-darkest:   #2B1210;
+  --neo-teal:      #F96746;
+  --neo-cyan:      #FF8E6A;
+  --neo-surface:   #FDF1EE;
+  --neo-border:    #F0C8BE;
+}
+
+section.periwinkle {
+  --neo-blue:      #6A82FF;
+  --neo-dark-blue: #4A5FDB;
+  --neo-darkest:   #0D1240;
+  --neo-teal:      #8A9AFF;
+  --neo-cyan:      #B0BAFF;
+  --neo-surface:   #F0F2FF;
+  --neo-border:    #C8CFFF;
+}
+
+section.neutral {
+  --neo-blue:      #4F4E4D;
+  --neo-dark-blue: #181414;
+  --neo-darkest:   #181414;
+  --neo-teal:      #4C99A4;
+  --neo-cyan:      #8FE3E8;
+  --neo-surface:   #F2EAD4;
+  --neo-border:    #E0D4BC;
+}

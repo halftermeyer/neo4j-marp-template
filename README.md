@@ -39,11 +39,26 @@ math: katex
 
 ### Slide classes
 
+Layout classes:
+
 ```markdown
 <!-- _class: lead -->    ← dark title slide
-<!-- _class: invert -->  ← dark blue section slide
+<!-- _class: invert -->  ← dark section slide
 <!-- _class: dense -->   ← reduced font size for content-heavy slides (long code, many bullets, etc.)
 (none)                   ← white content slide
+```
+
+Per-slide palette classes (combine with layout classes):
+
+```markdown
+<!-- _class: forest -->      ← green accent (sustainability, partnerships)
+<!-- _class: marigold -->    ← amber accent (energy, innovation, premium)
+<!-- _class: hibiscus -->    ← coral accent (bold, high-energy topics)
+<!-- _class: periwinkle -->  ← blue-violet accent (AI/ML, future tech)
+<!-- _class: neutral -->     ← warm gray accent (appendix, reference)
+
+<!-- _class: lead marigold -->    ← combine freely
+<!-- _class: invert forest -->
 ```
 
 ### Cypher
@@ -109,7 +124,7 @@ Claude writes the `.md` file, clones this repo to a temp directory, builds the P
 |---|---|
 | `decks/` | Your slide files — put them here |
 | `examples/` | Reference decks (`slides.md`, `graph-type.md`) |
-| `neo4j.css` | Neo4j brand theme |
+| `neo4j.css` | Neo4j brand theme — includes all palette classes |
 | `build.mjs` | Build pipeline (preprocess + Marp CLI) |
 | `marp.config.mjs` | Marp engine config (theme + Cypher hljs) |
 | `SLIDE_PROMPT.md` | LLM prompt for generating decks |

@@ -5,7 +5,7 @@ paginate: true
 math: katex
 ---
 
-<!-- _class: lead -->
+<!-- _class: lead marigold -->
 
 ![width:160px](../assets/logo-white.png)
 
@@ -27,7 +27,7 @@ math: katex
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: lead marigold -->
 
 # The Problem
 
@@ -65,7 +65,7 @@ CREATE CONSTRAINT FOR (p:Person)
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: lead marigold -->
 
 # Introducing GRAPH TYPE
 
@@ -103,7 +103,7 @@ GRAPH TYPE is a **preview feature** introduced in **Neo4j 2026.02**:
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: lead marigold -->
 
 # Core Syntax
 
@@ -175,7 +175,7 @@ Constraints can be declared **inline** or with the `REQUIRE` keyword:
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: lead marigold -->
 
 # Lifecycle: SET · ADD · ALTER · DROP · SHOW
 
@@ -308,7 +308,7 @@ CONSTRAINT `company_name` FOR (`n`:`Company`) REQUIRE (`n`.`name`) IS KEY
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: lead marigold -->
 
 # Under the Hood
 
@@ -354,7 +354,7 @@ ORDER BY labelsOrTypes
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: lead marigold -->
 
 # Open Graph Type
 
@@ -396,7 +396,7 @@ ALTER CURRENT GRAPH TYPE SET {
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: lead marigold -->
 
 # When to Use GRAPH TYPE
 
@@ -453,7 +453,7 @@ ALTER CURRENT GRAPH TYPE SET {
 
 ---
 
-<!-- _class: lead -->
+<!-- _class: lead marigold -->
 
 # Thank You
 
