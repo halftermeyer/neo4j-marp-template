@@ -192,11 +192,13 @@ async function buildFile(inputFile) {
 
   // For PDF: optionally detect overflow, patch, then rebuild
   if (isPdf && !noDensify) {
-    // First pass: build to HTML for overflow check
-    const htmlFile = join(dir, `${stem}.html`)
-    spawnSync(marp, ['--no-stdin', '--html', previewFile, '-o', htmlFile], { stdio: 'pipe' })
+    // First pass: build to a temp HTML for overflow check (not stem.html,
+    // which belongs to the HTML build target)
+    const tmpHtml = join(mkdtempSync(join(tmpdir(), 'marp-densify-')), 'check.html')
+    spawnSync(marp, ['--no-stdin', '--html', previewFile, '-o', tmpHtml], { stdio: 'pipe' })
 
-    const patched = await densifyIfNeeded(inputFile, htmlFile)
+    const patched = await densifyIfNeeded(inputFile, tmpHtml)
+    rmSync(dirname(tmpHtml), { recursive: true, force: true })
 
     if (patched) {
       // Re-preprocess patched source, then build PDF
