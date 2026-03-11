@@ -124,7 +124,7 @@ Claude writes the `.md` file, clones this repo to a temp directory, builds the P
 | File | Purpose |
 |---|---|
 | `decks/` | Your slide files — put them here |
-| `examples/` | Reference decks (`slides.md`, `graph-type.md`, `neo4j-marp-template-guide.md`) |
+| `examples/` | Reference decks (`slides.md`, `neo4j-marp-template-guide.md`) |
 | `neo4j.css` | Neo4j brand theme — includes all palette classes |
 | `build.mjs` | Build pipeline (preprocess + Marp CLI) |
 | `marp.config.mjs` | Marp engine config (theme + Cypher hljs) |
