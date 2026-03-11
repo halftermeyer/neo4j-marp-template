@@ -51,11 +51,11 @@ Generate a complete Neo4j Marp slide deck about: **$ARGUMENTS**
    ```
    Do not delete `<cwd>/assets` during cleanup — leave it in place.
 
-7. **Build and densify** from the cloned template directory:
+7. **Build to PDF** from the cloned template directory:
    ```bash
-   cd "$NEO4J_MARP_TMP" && node densify.mjs <absolute-path-to-deck-file>
+   cd "$NEO4J_MARP_TMP" && node build.mjs <absolute-path-to-deck-file> --pdf
    ```
-   `densify.mjs` builds to HTML, detects slides whose content overflows the 720 px slide height, automatically adds `<!-- _class: dense -->` to those slides in the source `.md`, then rebuilds to PDF. The final PDF will be written next to the `.md` file.
+   The build automatically detects overflowing slides and adds `<!-- _class: dense -->` to fix them before producing the final PDF. The PDF will be written next to the `.md` file.
 
 8. **Clean up** only the temporary clone — never touch `<cwd>/assets`:
    ```bash

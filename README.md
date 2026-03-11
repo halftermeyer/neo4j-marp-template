@@ -105,9 +105,10 @@ Install the skill once to generate and build branded decks from any directory us
 
 ```bash
 REPO=$(git rev-parse --show-toplevel)
-mkdir -p ~/.claude/skills/neo4j-slides
+mkdir -p ~/.claude/skills/neo4j-slides/examples
 cp "$REPO/claude-tools/skills/neo4j-slides/SKILL.md" ~/.claude/skills/neo4j-slides/
-cp "$REPO/SLIDE_PROMPT.md" ~/.claude/skills/neo4j-slides/
+cp "$REPO/SLIDE_PROMPT.md"                            ~/.claude/skills/neo4j-slides/
+cp "$REPO/examples/slides.md"                         ~/.claude/skills/neo4j-slides/examples/
 ```
 
 **Use:** open Claude Code in any directory and run:
@@ -123,7 +124,7 @@ Claude writes the `.md` file, clones this repo to a temp directory, builds the P
 | File | Purpose |
 |---|---|
 | `decks/` | Your slide files — put them here |
-| `examples/` | Reference decks (`slides.md`, `graph-type.md`) |
+| `examples/` | Reference decks (`slides.md`, `graph-type.md`, `neo4j-marp-template-guide.md`) |
 | `neo4j.css` | Neo4j brand theme — includes all palette classes |
 | `build.mjs` | Build pipeline (preprocess + Marp CLI) |
 | `marp.config.mjs` | Marp engine config (theme + Cypher hljs) |

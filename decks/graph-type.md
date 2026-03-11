@@ -242,6 +242,8 @@ CREATE (:Planet:CelestialBody:Location {
 
 ---
 
+
+<!-- _class: dense -->
 ## ALTER — Modify an Element Type
 
 `ALTER CURRENT GRAPH TYPE ALTER` redefines specific element types. **Repeat all properties you want to keep** — anything omitted stops being enforced.
@@ -402,6 +404,8 @@ ALTER CURRENT GRAPH TYPE SET {
 
 ---
 
+
+<!-- _class: dense -->
 ## Good Candidates
 
 <div style="display:flex; gap:2rem;">
