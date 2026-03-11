@@ -40,7 +40,7 @@ Apply with an HTML comment **before** the slide content:
 |---|---|---|
 | `lead` | Dark navy background, large white title, cyan subtitle | Opening slide, section breaks, closing slide |
 | `invert` | Dark blue background, cyan headings | Emphasis slides, key takeaways |
-| `dense` | Reduced font size (20px) and tighter spacing | Slides with long code listings that would otherwise overflow |
+| `dense` | Reduced font size (20px) and tighter spacing | Slides with long code listings, many bullet points, or any content-heavy layout that would otherwise overflow |
 | _(none)_ | White background, blue headings | Regular content slides |
 
 **Section break pattern** — use `lead` between major sections:

@@ -42,6 +42,7 @@ math: katex
 ```markdown
 <!-- _class: lead -->    ← dark title slide
 <!-- _class: invert -->  ← dark blue section slide
+<!-- _class: dense -->   ← reduced font size for content-heavy slides (long code, many bullets, etc.)
 (none)                   ← white content slide
 ```
 
