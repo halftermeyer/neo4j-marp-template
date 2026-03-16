@@ -178,6 +178,12 @@ sequenceDiagram
 
 Keep diagrams simple — max ~6 nodes or ~6 steps for readability on a slide.
 
+**Multi-line labels** — use `<br/>` (not `\n`) for line breaks inside node labels:
+```mermaid
+graph LR
+    A["Line one<br/>Line two"] --> B["Step 1<br/>detail"]
+```
+
 **Palette-aware diagrams** — Mermaid SVGs are pre-rendered at build time and don't automatically inherit the slide's palette class. To match diagram colors to the slide palette, add a `%%{init: ...}%%` directive as the first line of the diagram block:
 
 **Graph/flowchart diagrams** — use `mainBkg`, `nodeBorder`, `primaryTextColor`, `lineColor`:

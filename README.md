@@ -89,6 +89,8 @@ RETURN friend.name, friend.age
 
 Use ` ```mermaid ` — rendered to SVG at build time. Supports all diagram types (`graph`, `sequenceDiagram`, `classDiagram`, `flowchart`, etc.)
 
+Use `<br/>` (not `\n`) for line breaks inside node labels.
+
 ### Math (KaTeX)
 
 - Inline: `$E = mc^2$`
