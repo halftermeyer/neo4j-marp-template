@@ -1,0 +1,190 @@
+% neo4j-article.sty — Neo4j branded academic article style
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{neo4j-article}[2026/03/22 Neo4j branded article style]
+
+% ─── Dependencies ───────────────────────────────────────────────────
+\RequirePackage[dvipsnames,svgnames,x11names]{xcolor}
+\RequirePackage{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{enumitem}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{colortbl}
+\RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{listings}
+\RequirePackage{tcolorbox}
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+\RequirePackage{fontspec}
+\RequirePackage{microtype}
+\RequirePackage{caption}
+\RequirePackage{float}
+\RequirePackage[colorlinks=true]{hyperref}
+
+\tcbuselibrary{skins,breakable}
+
+% ─── Neo4j Color Palette ────────────────────────────────────────────
+\definecolor{neo-blue}{HTML}{0A6190}
+\definecolor{neo-dark-blue}{HTML}{014063}
+\definecolor{neo-darkest}{HTML}{041823}
+\definecolor{neo-green}{HTML}{145439}
+\definecolor{neo-teal}{HTML}{5DB3BF}
+\definecolor{neo-cyan}{HTML}{8FE3E8}
+\definecolor{neo-light-green}{HTML}{90CB62}
+\definecolor{neo-marigold}{HTML}{FFA901}
+\definecolor{neo-text}{HTML}{1B1B1B}
+\definecolor{neo-muted}{HTML}{525252}
+\definecolor{neo-surface}{HTML}{F5F7FA}
+\definecolor{neo-border}{HTML}{E6E9EE}
+\definecolor{neo-off-white}{HTML}{FCF9F6}
+
+% ─── Page Geometry ──────────────────────────────────────────────────
+\geometry{a4paper,top=30mm,bottom=30mm,left=25mm,right=25mm}
+
+% ─── Fonts ──────────────────────────────────────────────────────────
+\IfFontExistsTF{Syne Neo}{%
+  \newfontfamily\headingfont{Syne Neo}[BoldFont={Syne Neo Bold}]%
+}{%
+  \newfontfamily\headingfont{Helvetica Neue}[BoldFont={Helvetica Neue Bold}]%
+}
+\IfFontExistsTF{Public Sans}{%
+  \setmainfont{Public Sans}%
+}{%
+  \setmainfont{Helvetica Neue}%
+}
+\IfFontExistsTF{Fira Code}{%
+  \setmonofont{Fira Code}[Scale=0.85]%
+}{%
+  \setmonofont{Menlo}[Scale=0.85]%
+}
+
+% ─── Hyperlinks (deferred to avoid writing before \begin{document}) ─
+\AtBeginDocument{%
+  \hypersetup{linkcolor=neo-blue,urlcolor=neo-blue,citecolor=neo-dark-blue}%
+  \color{neo-text}%
+  \pagestyle{fancy}%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+  \fancyhead[C]{%
+    \begin{tikzpicture}[remember picture, overlay]
+      \shade[left color=neo-blue, right color=neo-cyan]
+        ([yshift=-1mm]current page.north west) rectangle
+        ([yshift=-5mm]current page.north east);
+    \end{tikzpicture}%
+  }%
+  \fancyfoot[C]{\color{neo-muted}\small\thepage}%
+}
+
+% ─── Section Formatting ────────────────────────────────────────────
+\titleformat{\section}
+  {\headingfont\Large\bfseries\color{neo-blue}}
+  {\color{neo-teal}\S\thesection}{0.6em}{}
+  [\vspace{-0.5ex}{\color{neo-teal}\titlerule[2pt]}]
+
+\titleformat{\subsection}
+  {\headingfont\large\bfseries\color{neo-dark-blue}}
+  {\color{neo-teal}\S\thesubsection}{0.5em}{}
+
+\titlespacing*{\section}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+% ─── Theorem Environments ──────────────────────────────────────────
+\newtcolorbox{theorembox}[1][Theorem]{%
+  colback=neo-surface,colframe=neo-blue,
+  fonttitle=\headingfont\bfseries\color{neo-blue},title=#1,
+  boxrule=1.5pt,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,breakable}
+
+\newtcolorbox{proofbox}[1][Proof]{%
+  colback={neo-green!5!white},colframe=neo-green,
+  fonttitle=\headingfont\bfseries\color{neo-green},title=#1,
+  boxrule=1.5pt,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,
+  breakable,after upper={\hfill$\square$}}
+
+\newtcolorbox{resultbox}[1][Result]{%
+  colback={neo-light-green!8!white},colframe=neo-light-green,
+  fonttitle=\headingfont\bfseries\color{neo-green},title=#1,
+  boxrule=1.5pt,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,breakable}
+
+\newtcolorbox{factbox}[1][Fact]{%
+  colback=neo-surface,colframe=neo-teal,
+  fonttitle=\headingfont\bfseries\color{neo-blue},title=#1,
+  boxrule=1pt,arc=2pt,left=8pt,right=8pt,top=6pt,bottom=6pt,breakable}
+
+% ─── Cypher Listing Style ──────────────────────────────────────────
+\lstdefinelanguage{Cypher}{
+  morekeywords={MATCH,WHERE,RETURN,WITH,CREATE,MERGE,SET,DELETE,DETACH,
+    REMOVE,ORDER,BY,LIMIT,SKIP,UNWIND,FOREACH,CALL,YIELD,
+    CASE,WHEN,THEN,ELSE,END,AND,OR,NOT,IN,AS,IS,NULL,
+    TRUE,FALSE,LET,NEXT,FILTER,CYPHER,
+    OPTIONAL,DISTINCT,UNION,ALL,
+    ON,ERROR,BREAK,TRANSACTIONS,OF,ROW,REPORT,STATUS},
+  morekeywords=[2]{reduce,head,range,size,count,sum,collect,
+    toInteger,split,trim,coalesce,toString,abs},
+  morekeywords=[3]{INC,JZDEC,HALT},
+  sensitive=true,
+  morestring=[b]',
+  morestring=[b]",
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+}
+
+\lstdefinestyle{cypher}{
+  language=Cypher,
+  basicstyle=\ttfamily\small\color{neo-off-white},
+  keywordstyle=\color{neo-cyan}\bfseries,
+  keywordstyle=[2]\color{neo-teal},
+  keywordstyle=[3]\color{neo-light-green},
+  stringstyle=\color{neo-marigold},
+  commentstyle=\color{gray}\itshape,
+  numbers=none,
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+  frame=none,
+  xleftmargin=0pt,
+  aboveskip=0pt,
+  belowskip=0pt,
+}
+
+\lstset{style=cypher}
+
+% Wrap listings in a tcolorbox for seamless dark background + teal left border
+\newtcolorbox{codeblock}{%
+  colback=neo-darkest,colframe=neo-darkest,
+  coltext=neo-off-white,
+  boxrule=0pt,
+  borderline west={3pt}{0pt}{neo-teal},
+  arc=2pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt,
+  breakable,
+  before skip=1em,after skip=1em,
+}
+
+% ─── Abstract Environment ──────────────────────────────────────────
+\renewenvironment{abstract}{%
+  \begin{tcolorbox}[
+    colback=neo-surface,colframe=neo-teal,boxrule=0pt,
+    borderline west={3pt}{0pt}{neo-teal},arc=0pt,
+    left=10pt,right=10pt,top=8pt,bottom=8pt,
+    fontupper=\color{neo-muted}\small,
+  ]
+  \noindent\textbf{\headingfont\color{neo-blue}Abstract.}\quad
+}{%
+  \end{tcolorbox}
+}
+
+% ─── Blockquote Environment ────────────────────────────────────────
+\newenvironment{neoquote}{%
+  \begin{tcolorbox}[
+    colback=neo-surface,colframe=neo-teal,boxrule=0pt,
+    borderline west={3pt}{0pt}{neo-teal},arc=0pt,
+    left=10pt,right=10pt,top=6pt,bottom=6pt,
+  ]
+}{%
+  \end{tcolorbox}
+}
+
+\endinput

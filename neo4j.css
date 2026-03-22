@@ -277,6 +277,13 @@ section.dense pre {
 
 section.dense pre code { font-size: 0.82em; }
 
+/* ── Two-column layout ──────────────────────────────────────────────────── */
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5em;
+}
+
 /* ── Mermaid diagrams ───────────────────────────────────────────────────── */
 .mermaid-diagram {
   display: flex;
