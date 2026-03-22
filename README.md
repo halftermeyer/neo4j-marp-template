@@ -111,9 +111,15 @@ Put images in [`assets/`](assets/) and reference them as `../assets/filename` fr
 
 [`SLIDE_PROMPT.md`](SLIDE_PROMPT.md) is a ready-to-use system prompt. Paste it into any LLM (Claude, ChatGPT, Gemini…) as the system prompt, then describe your deck. The output drops straight into this template.
 
-### Claude Code skill (`/neo4j-slides`)
+### Claude Code skill (`/neo4j-docs`)
 
-Install the skill once to generate and build branded decks from any directory using [Claude Code](https://claude.ai/code).
+Install the skill once to generate and build branded documents from any directory using [Claude Code](https://claude.ai/code). Supports three formats:
+
+| You ask for | Format | Output |
+|---|---|---|
+| slides, deck, presentation | Marp slide deck | `.md` + `.pdf` |
+| article, document, white paper | HTML article | `.html` + `.pdf` |
+| LaTeX, academic paper | LaTeX article | `.tex` + `.pdf` |
 
 **Prerequisites:** [Claude Code](https://claude.ai/code) installed.
 
@@ -121,19 +127,17 @@ Install the skill once to generate and build branded decks from any directory us
 
 ```bash
 REPO=$(git rev-parse --show-toplevel)
-mkdir -p ~/.claude/skills/neo4j-slides/examples
-cp "$REPO/claude-tools/skills/neo4j-slides/SKILL.md" ~/.claude/skills/neo4j-slides/
-cp "$REPO/SLIDE_PROMPT.md"                            ~/.claude/skills/neo4j-slides/
-cp "$REPO/examples/slides.md"                         ~/.claude/skills/neo4j-slides/examples/
+mkdir -p ~/.claude/skills/neo4j-docs/examples
+cp -r "$REPO/claude-tools/skills/neo4j-docs/." ~/.claude/skills/neo4j-docs/
 ```
 
 **Use:** open Claude Code in any directory and run:
 
 ```
-/neo4j-slides <topic description>
+/neo4j-docs <topic description>
 ```
 
-Claude writes the `.md` file, clones this repo to a temp directory, builds the PDF, copies `assets/` next to your deck, and cleans up — no local template installation required.
+Claude writes the output file, clones this repo to a temp directory, builds the PDF, and cleans up — no local template installation required.
 
 ## Files
 
@@ -144,6 +148,7 @@ Claude writes the `.md` file, clones this repo to a temp directory, builds the P
 | `neo4j.css` | Neo4j brand theme — includes all palette classes |
 | `build.mjs` | Build pipeline (preprocess + Marp CLI) |
 | `marp.config.mjs` | Marp engine config (theme + Cypher hljs) |
-| `SLIDE_PROMPT.md` | LLM prompt for generating decks |
+| `SLIDE_PROMPT.md` | LLM prompt for generating decks (also used by the skill) |
+| `claude-tools/skills/neo4j-docs/` | Claude Code skill source (`/neo4j-docs`) |
 | `assets/` | Images and SVGs |
 | `.vscode/settings.json` | VS Code Marp extension config |
