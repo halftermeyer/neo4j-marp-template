@@ -19,6 +19,22 @@ If ambiguous, ask. If the user says "article" without specifying, default to **H
 
 ---
 
+## Build environment (shared by all formats)
+
+All three formats use a **persistent local clone** of the template repo. Set up once, reuse across builds:
+
+```bash
+NEO4J_MARP_CACHE="${HOME}/.cache/neo4j-marp-template"
+if [ ! -f "$NEO4J_MARP_CACHE/package.json" ]; then
+  git clone --depth 1 https://github.com/halftermeyer/neo4j-marp-template.git "$NEO4J_MARP_CACHE"
+  cd "$NEO4J_MARP_CACHE" && npm install --silent
+fi
+```
+
+Do this unconditionally at the start of every build — it is a no-op when the cache already exists. Do **not** delete the cache directory afterwards.
+
+---
+
 ## Format A: Marp Slide Deck
 
 ### Design rules
@@ -31,13 +47,7 @@ If ambiguous, ask. If the user says "article" without specifying, default to **H
 
 2. **Get the current working directory** by running `pwd`. You will write the deck file there (called `<cwd>` below).
 
-3. **Set up the build environment** — clone the template to a temporary directory and install dependencies:
-   ```bash
-   NEO4J_MARP_TMP=$(mktemp -d)
-   git clone --depth 1 https://github.com/halftermeyer/neo4j-marp-template.git "$NEO4J_MARP_TMP"
-   cd "$NEO4J_MARP_TMP" && npm install --silent
-   ```
-   Do this unconditionally — do not ask the user for permission.
+3. **Set up the build environment** using the persistent cache as described above.
 
 4. **Read the reference deck** — before writing anything, read `${CLAUDE_SKILL_DIR}/examples/slides.md`. It is the canonical example showing every layout, palette class combination, Cypher, Mermaid, and formatting pattern available in the template. Use it as ground truth for slide structure and class usage.
 
@@ -57,22 +67,17 @@ If ambiguous, ask. If the user says "article" without specifying, default to **H
 
 6. **Copy assets** — copy the template's `assets/` directory as a sibling of the deck file so that images (logo, node shapes, etc.) resolve correctly at build time and remain available afterwards:
    ```bash
-   cp -r "$NEO4J_MARP_TMP/assets" <cwd>/assets
+   cp -r "$NEO4J_MARP_CACHE/assets" <cwd>/assets
    ```
-   Do not delete `<cwd>/assets` during cleanup — leave it in place.
+   Do not delete `<cwd>/assets` — leave it in place.
 
-7. **Build to PDF** from the cloned template directory:
+7. **Build to PDF** from the cached template directory:
    ```bash
-   cd "$NEO4J_MARP_TMP" && node build.mjs <absolute-path-to-deck-file> --pdf
+   cd "$NEO4J_MARP_CACHE" && node build.mjs <absolute-path-to-deck-file> --pdf
    ```
    The build automatically detects overflowing slides and adds `<!-- _class: dense -->` to fix them before producing the final PDF. The PDF will be written next to the `.md` file.
 
-8. **Clean up** only the temporary clone — never touch `<cwd>/assets`:
-   ```bash
-   rm -rf "$NEO4J_MARP_TMP"
-   ```
-
-9. **Report** the output `.md` and `.pdf` paths to the user.
+8. **Report** the output `.md` and `.pdf` paths to the user.
 
 ---
 
@@ -88,23 +93,18 @@ If ambiguous, ask. If the user says "article" without specifying, default to **H
 
 2. **Get the current working directory** by running `pwd` (`<cwd>`).
 
-3. **Set up the build environment** — clone the Marp template (for puppeteer + assets):
-   ```bash
-   NEO4J_MARP_TMP=$(mktemp -d)
-   git clone --depth 1 https://github.com/halftermeyer/neo4j-marp-template.git "$NEO4J_MARP_TMP"
-   cd "$NEO4J_MARP_TMP" && npm install --silent
-   ```
+3. **Set up the build environment** using the persistent cache as described above.
 
 4. **Write the HTML article** directly to `<cwd>/<filename>.html`. The HTML file contains all CSS inline (Neo4j design tokens, fonts from Google Fonts CDN, KaTeX from CDN, Mermaid from CDN). There is no intermediate markdown — write HTML directly. Follow the ARTICLE_PROMPT design system for colors, fonts, Cypher syntax highlighting spans, box types, and structure.
 
 5. **Copy assets**:
    ```bash
-   cp -r "$NEO4J_MARP_TMP/assets" <cwd>/assets
+   cp -r "$NEO4J_MARP_CACHE/assets" <cwd>/assets
    ```
 
-6. **Write a render script** and **build to PDF** using puppeteer from the Marp template's node_modules:
+6. **Write a render script** and **build to PDF** using puppeteer from the cached template's node_modules:
    ```bash
-   cat > "$NEO4J_MARP_TMP/render-article.mjs" << 'SCRIPT'
+   cat > "$NEO4J_MARP_CACHE/render-article.mjs" << 'SCRIPT'
    import puppeteer from 'puppeteer';
    import path from 'path';
    const absHtml = path.resolve(process.argv[2]);
@@ -123,17 +123,12 @@ If ambiguous, ask. If the user says "article" without specifying, default to **H
    });
    await browser.close();
    SCRIPT
-   cd "$NEO4J_MARP_TMP" && node render-article.mjs <absolute-path-to-html-file>
+   cd "$NEO4J_MARP_CACHE" && node render-article.mjs <absolute-path-to-html-file>
    ```
 
    **Page number gotcha**: Page numbers are handled **only** by puppeteer's `footerTemplate`. Do NOT also use CSS `@page @bottom-center { content: counter(page) }` — that causes duplicates.
 
-7. **Clean up** only the temporary clone:
-   ```bash
-   rm -rf "$NEO4J_MARP_TMP"
-   ```
-
-8. **Report** the output `.html` and `.pdf` paths to the user.
+7. **Report** the output `.html` and `.pdf` paths to the user.
 
 ---
 
@@ -151,12 +146,9 @@ If ambiguous, ask. If the user says "article" without specifying, default to **H
 
 3. **Ensure `neo4j-article.sty` exists** at `<cwd>/neo4j-article.sty`. If it doesn't, read the reference copy from `${CLAUDE_SKILL_DIR}/neo4j-article.sty` and write it to `<cwd>/neo4j-article.sty`.
 
-4. **Ensure assets exist** — if `<cwd>/assets/logo.png` doesn't exist, clone the Marp template and copy assets:
+4. **Ensure assets exist** — if `<cwd>/assets/logo.png` doesn't exist, set up the build environment using the persistent cache as described above, then copy assets:
    ```bash
-   NEO4J_MARP_TMP=$(mktemp -d)
-   git clone --depth 1 https://github.com/halftermeyer/neo4j-marp-template.git "$NEO4J_MARP_TMP"
-   cp -r "$NEO4J_MARP_TMP/assets" <cwd>/assets
-   rm -rf "$NEO4J_MARP_TMP"
+   cp -r "$NEO4J_MARP_CACHE/assets" <cwd>/assets
    ```
 
 5. **Write the `.tex` file** to `<cwd>/<filename>.tex`. The document must:

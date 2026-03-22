@@ -264,7 +264,7 @@ Mermaid SVGs are pre-rendered at build time — they don't inherit CSS palette c
 graph LR
     Deck([Your .md file]) -->|build.mjs| PDF[(PDF / HTML)]
     Deck -->|Marp preview| Preview[VS Code Preview]
-    Deck -->|/neo4j-slides| Claude[Claude Code skill]
+    Deck -->|/neo4j-docs| Claude[Claude Code skill]
 ```
 
 The `%%{init}%%` line is the **first line** inside the mermaid block. Reference colors for all 5 palettes are in `SLIDE_PROMPT.md`.
@@ -277,26 +277,26 @@ The `%%{init}%%` line is the **first line** inside the mermaid block. Reference 
 
 ---
 
-## What Is the `/neo4j-slides` Skill?
+## What Is the `/neo4j-docs` Skill?
 
-A **Claude Code skill** that generates a complete, branded Marp slide deck from a topic description — and builds it to PDF automatically.
+A **Claude Code skill** that generates Neo4j-branded documents from a topic description — and builds them to PDF automatically. Supports three formats:
 
 <div style="display:flex; gap:2rem;">
 <div>
 
-### What it does
-- Generates the `.md` deck from `SLIDE_PROMPT.md` + reference deck
-- Auto-detects overflowing slides and adds `dense` where needed
-- Copies `assets/` alongside the deck
+### Formats
+- **Marp slides** — deck + PDF
+- **HTML article** — web doc + PDF
+- **LaTeX article** — `.tex` + PDF
 
 </div>
 <div>
 
 ### What you get
-- A ready-to-edit `.md` file
+- A ready-to-edit source file
 - A rendered `.pdf` alongside it
 - An `assets/` folder with logo and node shapes
-- No manual Marp setup needed
+- No manual setup needed
 
 </div>
 </div>
@@ -311,21 +311,17 @@ From inside the repo root, run:
 
 ```bash
 REPO=$(git rev-parse --show-toplevel)
-mkdir -p ~/.claude/skills/neo4j-slides/examples
-cp "$REPO/claude-tools/skills/neo4j-slides/SKILL.md" ~/.claude/skills/neo4j-slides/
-cp "$REPO/SLIDE_PROMPT.md"                            ~/.claude/skills/neo4j-slides/
-cp "$REPO/examples/slides.md"                         ~/.claude/skills/neo4j-slides/examples/
+mkdir -p ~/.claude/skills/neo4j-docs/examples
+cp -r "$REPO/claude-tools/skills/neo4j-docs/." ~/.claude/skills/neo4j-docs/
 ```
 
-The skill lives in `~/.claude/skills/neo4j-slides/` and is available in any Claude Code session.
+The skill lives in `~/.claude/skills/neo4j-docs/` and is available in any Claude Code session.
 
 To re-sync after updates (e.g. after pulling new commits):
 
 ```bash
 REPO=$(git rev-parse --show-toplevel)
-cp "$REPO/claude-tools/skills/neo4j-slides/SKILL.md" ~/.claude/skills/neo4j-slides/
-cp "$REPO/SLIDE_PROMPT.md"                            ~/.claude/skills/neo4j-slides/
-cp "$REPO/examples/slides.md"                         ~/.claude/skills/neo4j-slides/examples/
+cp -r "$REPO/claude-tools/skills/neo4j-docs/." ~/.claude/skills/neo4j-docs/
 ```
 
 ---
@@ -334,12 +330,14 @@ cp "$REPO/examples/slides.md"                         ~/.claude/skills/neo4j-sli
 
 ## Using the Skill
 
-In any Claude Code session, invoke with `/neo4j-slides` followed by a topic:
+In any Claude Code session, invoke with `/neo4j-docs` followed by a topic:
 
 ```
-/neo4j-slides GraphRAG — grounding LLMs with knowledge graphs
-/neo4j-slides Fraud detection with Neo4j for financial services
-/neo4j-slides Neo4j GDS algorithms: PageRank, Louvain, Node2Vec
+/neo4j-docs GraphRAG — grounding LLMs with knowledge graphs
+/neo4j-docs Fraud detection with Neo4j for financial services
+/neo4j-docs Neo4j GDS algorithms: PageRank, Louvain, Node2Vec (slides)
+/neo4j-docs Cypher is Turing-Complete (article)
+/neo4j-docs Graph algorithms for supply chain (LaTeX paper)
 ```
 
 Claude will:
